@@ -8,11 +8,18 @@ const ProductDetailScreen = props => {
   const selectedProduct = useSelector(state =>
     state.products.availableProducts.find(prod => prod.id === productId)
   );
+
   return (
     <View>
       <Text>{selectedProduct.title}</Text>
     </View>
   );
+};
+
+ProductDetailScreen.navigationOptions = navData => {
+  return {
+    headerTitle: navData.navigation.getParam('producTitle')
+  };
 };
 
 const styles = StyleSheet.create({});
