@@ -1,8 +1,8 @@
 // Present a list of all the products we can order
 import React from 'react';
-import { FlatList, Text } from 'react-native';
+import { FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
-
+import ProductItem from '../../components/shop/ProductItem';
 const ProductsOverviewScreen = props => {
   // takes a function which automatically receives the state and returns `state.products.availableProducts`
   // from combineReducer in App.js, and gets `availableProducts` from the reducer/product.js
@@ -11,7 +11,15 @@ const ProductsOverviewScreen = props => {
     <FlatList
       data={products}
       keyExtractor={item => item.id}
-      renderItem={itemData => <Text>{itemData.item.title}</Text>}
+      renderItem={itemData => (
+        <ProductItem
+          image={itemData.item.imageUrl}
+          title={itemData.item.title}
+          price={itemData.item.price}
+          onViewDetail={() => {}}
+          onAddToCart={() => {}}
+        />
+      )}
     />
   );
 };
