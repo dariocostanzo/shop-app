@@ -1,7 +1,7 @@
-import { ADD_TO_CART } from '../actions/cart';
+import { ADD_TO_CART } from '../action/cart';
 import CartItem from '../../models/cart-item';
 
-const inistialState = {
+const initialState = {
   items: {},
   totalAmount: 0
 };
