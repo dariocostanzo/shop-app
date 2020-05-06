@@ -1,17 +1,19 @@
 // Present a list of all the products we can order
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Platform } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import ProductItem from '../../components/shop/ProductItem';
 import * as cartActions from '../../store/action/cart';
+import HeaderButton from '../../components/UI/HeaderButton';
 
 const ProductsOverviewScreen = props => {
   // takes a function which automatically receives the state and returns `state.products.availableProducts`
   // from combineReducer in App.js, and gets `availableProducts` from the reducer/product.js
   const products = useSelector(state => state.products.availableProducts);
-
   const dispatch = useDispatch();
+
   return (
     <FlatList
       data={products}
@@ -36,8 +38,21 @@ const ProductsOverviewScreen = props => {
   );
 };
 
-ProductsOverviewScreen.navigationOptions = {
-  headerTitle: 'All Products'
+ProductsOverviewScreen.navigationOptions = navData => {
+  return {
+    headerTitle: 'All Products',
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title='Cart'
+          iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+          onPress={() => {
+            navData.navigation.navigate('Cart');
+          }}
+        />
+      </HeaderButtons>
+    )
+  };
 };
 
 export default ProductsOverviewScreen;
