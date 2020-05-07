@@ -11,7 +11,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import * as cartActions from '../../store/action/cart';
+import * as cartActions from '../../store/actions/cart';
 
 const ProductDetailScreen = props => {
   const productId = props.navigation.getParam('productId');

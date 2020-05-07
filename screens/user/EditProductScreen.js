@@ -8,15 +8,18 @@ import {
   Platform
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import HeaderButton from '../../components/UI/HeaderButton';
+import * as productsActions from '../../store/actions/products';
 
 const EditProductScreen = props => {
   const prodId = props.navigation.getParam('productId');
   const editedProduct = useSelector(state =>
     state.products.userProducts.find(prod => prod.id === prodId)
   );
+
+  const dispatch = useDispatch();
 
   const [title, setTitle] = useState(editedProduct ? editedProduct.title : '');
   const [imageUrl, setImageUrl] = useState(
@@ -28,8 +31,16 @@ const EditProductScreen = props => {
   );
 
   const submitHandler = useCallback(() => {
-    console.log('Submitting!');
-  }, []);
+    if (editedProduct) {
+      dispatch(
+        productsActions.updateProduct(prodId, title, description, imageUrl)
+      );
+    } else {
+      dispatch(
+        productsActions.createProduct(title, description, imageUrl, +price)
+      );
+    }
+  }, [dispatch, prodId, title, description, imageUrl, price]);
 
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });
@@ -43,40 +54,33 @@ const EditProductScreen = props => {
           <TextInput
             style={styles.input}
             value={title}
-            // to update the state with the newly entered title text
-            onChange={text => setTitle(text)}
+            onChangeText={text => setTitle(text)}
           />
         </View>
-
         <View style={styles.formControl}>
           <Text style={styles.label}>Image URL</Text>
           <TextInput
             style={styles.input}
             value={imageUrl}
-            // to update the state with the newly entered title text
-            onChange={text => setImageUrl(text)}
+            onChangeText={text => setImageUrl(text)}
           />
         </View>
-
         {editedProduct ? null : (
           <View style={styles.formControl}>
             <Text style={styles.label}>Price</Text>
             <TextInput
               style={styles.input}
               value={price}
-              // to update the state with the newly entered title text
-              onChange={text => setPrice(text)}
+              onChangeText={text => setPrice(text)}
             />
           </View>
         )}
-
         <View style={styles.formControl}>
           <Text style={styles.label}>Description</Text>
           <TextInput
             style={styles.input}
             value={description}
-            // to update the state with the newly entered title text
-            onChange={text => setDescription(text)}
+            onChangeText={text => setDescription(text)}
           />
         </View>
       </View>
