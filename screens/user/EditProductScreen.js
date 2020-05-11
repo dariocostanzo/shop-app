@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useCallback, useReducer } from 'react';
+import React, { useEffect, useCallback, useReducer } from 'react';
 import {
   View,
   ScrollView,
-  Text,
-  TextInput,
   StyleSheet,
   Platform,
   Alert,
@@ -30,7 +28,7 @@ const formReducer = (state, action) => {
     };
     let updatedFormIsValid = true;
     for (const key in updatedValidities) {
-      formIsValid = updatedFormIsValid && updatedValidities[key];
+      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
     }
     return {
       formIsValid: updatedFormIsValid,
@@ -46,11 +44,9 @@ const EditProductScreen = props => {
   const editedProduct = useSelector(state =>
     state.products.userProducts.find(prod => prod.id === prodId)
   );
-
   const dispatch = useDispatch();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
-    // initial state
     inputValues: {
       title: editedProduct ? editedProduct.title : '',
       imageUrl: editedProduct ? editedProduct.imageUrl : '',
@@ -66,23 +62,13 @@ const EditProductScreen = props => {
     formIsValid: editedProduct ? true : false
   });
 
-  // const [title, setTitle] = useState(editedProduct ? editedProduct.title : '');
-  // const [titleIsValid, setTitleIsValid] = useState(false);
-  // const [imageUrl, setImageUrl] = useState(
-  //   editedProduct ? editedProduct.imageUrl : ''
-  // );
-  // const [price, setPrice] = useState('');
-  // const [description, setDescription] = useState(
-  //   editedProduct ? editedProduct.description : ''
-  // );
-
   const submitHandler = useCallback(() => {
-    if (!formState.formIsValid) {
-      Alert.alert('Wrong input!', 'Please check the errors in the form.', [
-        { text: 'Okay' }
-      ]);
-      return;
-    }
+    // if (!formState.formIsValid) {
+    //   Alert.alert('Wrong input!', 'Please check the errors in the form.', [
+    //     { text: 'Okay' }
+    //   ]);
+    //   return;
+    // }
     if (editedProduct) {
       dispatch(
         productsActions.updateProduct(
@@ -124,7 +110,7 @@ const EditProductScreen = props => {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior='padding'
+      // behavior='padding'
       // keyboardVerticalOffset={100}
     >
       <ScrollView>
@@ -132,7 +118,7 @@ const EditProductScreen = props => {
           <Input
             id='title'
             label='Title'
-            errorText='Please enter a valide title!'
+            errorText='Please enter a valid title!'
             keyboardType='default'
             autoCapitalize='sentences'
             autoCorrect
@@ -143,9 +129,9 @@ const EditProductScreen = props => {
             required
           />
           <Input
-            id='title'
+            id='imageUrl'
             label='Image Url'
-            errorText='Please enter a valide URL!'
+            errorText='Please enter a valid image url!'
             keyboardType='default'
             returnKeyType='next'
             onInputChange={inputChangeHandler}
@@ -155,9 +141,9 @@ const EditProductScreen = props => {
           />
           {editedProduct ? null : (
             <Input
-              id='title'
+              id='price'
               label='Price'
-              errorText='Please enter a valide price!'
+              errorText='Please enter a valid price!'
               keyboardType='decimal-pad'
               returnKeyType='next'
               onInputChange={inputChangeHandler}
@@ -166,9 +152,9 @@ const EditProductScreen = props => {
             />
           )}
           <Input
-            id='title'
+            id='description'
             label='Description'
-            errorText='Please enter a valide description!'
+            errorText='Please enter a valid description!'
             keyboardType='default'
             autoCapitalize='sentences'
             autoCorrect

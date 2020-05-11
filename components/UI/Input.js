@@ -33,7 +33,7 @@ const Input = props => {
 
   useEffect(() => {
     if (inputState.touched) {
-      onInputChange(inputState.value, inputState.isValid, id);
+      onInputChange(id, inputState.value, inputState.isValid);
     }
   }, [inputState, onInputChange, id]);
 
@@ -55,13 +55,13 @@ const Input = props => {
     if (props.minLength != null && text.length < props.minLength) {
       isValid = false;
     }
-
-    dispatch({ type: INPUT_CHANGE, value: text, isValid });
+    dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid });
   };
 
   const lostFocusHandler = () => {
     dispatch({ type: INPUT_BLUR });
   };
+
   return (
     <View style={styles.formControl}>
       <Text style={styles.label}>{props.label}</Text>
@@ -70,12 +70,6 @@ const Input = props => {
         style={styles.input}
         value={inputState.value}
         onChangeText={textChangeHandler}
-        // keyboardType='default'
-        // autoCapitalize='sentences'
-        // autoCorrect
-        // returnKeyType='next'
-        // onEndEditing={() => console.log('onEndEditing')}
-        // onSubmitEditing={() => console.log('onSubmitEditing')}
         onBlur={lostFocusHandler}
       />
       {!inputState.isValid && inputState.touched && (

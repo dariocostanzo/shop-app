@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
   description: {
     fontFamily: 'open-sans',
     fontSize: 14,
-    textAlign: 'center'
+    textAlign: 'center',
+    marginHorizontal: 20
   }
 });
 
