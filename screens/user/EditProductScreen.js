@@ -68,19 +68,19 @@ const EditProductScreen = props => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('An error occured!', error, [{ text: 'Okay' }]);
+      Alert.alert('An error occurred!', error, [{ text: 'Okay' }]);
     }
   }, [error]);
 
   const submitHandler = useCallback(async () => {
-    // if (!formState.formIsValid) {
-    //   Alert.alert('Wrong input!', 'Please check the errors in the form.', [
-    //     { text: 'Okay' }
-    //   ]);
-    //   return;
-    // }
-    setIsLoading(true);
+    if (!formState.formIsValid) {
+      Alert.alert('Wrong input!', 'Please check the errors in the form.', [
+        { text: 'Okay' }
+      ]);
+      return;
+    }
     setError(null);
+    setIsLoading(true);
     try {
       if (editedProduct) {
         await dispatch(
@@ -127,7 +127,7 @@ const EditProductScreen = props => {
 
   if (isLoading) {
     return (
-      <View>
+      <View style={styles.centered}>
         <ActivityIndicator size='large' color='yellow' />
       </View>
     );
@@ -221,6 +221,11 @@ EditProductScreen.navigationOptions = navData => {
 const styles = StyleSheet.create({
   form: {
     margin: 20
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 

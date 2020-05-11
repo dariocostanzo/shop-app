@@ -1,6 +1,5 @@
 import Product from '../../models/product';
 
-// identifier of the action
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
@@ -8,11 +7,12 @@ export const SET_PRODUCTS = 'SET_PRODUCTS';
 
 export const fetchProducts = () => {
   return async dispatch => {
-    // you can execute any async code you want
+    // any async code you want!
     try {
       const response = await fetch(
         'https://rn-shop-app-9c5fd.firebaseio.com/products.json'
       );
+
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }
@@ -40,11 +40,11 @@ export const fetchProducts = () => {
     }
   };
 };
+
 export const deleteProduct = productId => {
-  // takes the `productId` and returns an action object
   return async dispatch => {
     const response = await fetch(
-      `https://rn-shop-app-9c5fd.firebaseio.com/${productId}products.json`,
+      `https://rn-shop-app-9c5fd.firebaseio.com/${productId}.json`,
       {
         method: 'DELETE'
       }
@@ -53,14 +53,13 @@ export const deleteProduct = productId => {
     if (!response.ok) {
       throw new Error('Something went wrong!');
     }
-
     dispatch({ type: DELETE_PRODUCT, pid: productId });
   };
 };
 
 export const createProduct = (title, description, imageUrl, price) => {
   return async dispatch => {
-    // you can execute any async code you want
+    // any async code you want!
     const response = await fetch(
       'https://rn-shop-app-9c5fd.firebaseio.com/products.json',
       {

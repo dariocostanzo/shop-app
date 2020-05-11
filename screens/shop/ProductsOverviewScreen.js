@@ -1,11 +1,12 @@
+// export default ProductsOverviewScreen;
 import React, { useState, useEffect, useCallback } from 'react';
 import {
+  View,
+  Text,
   FlatList,
   Button,
   Platform,
   ActivityIndicator,
-  View,
-  Text,
   StyleSheet
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,7 +21,6 @@ import Colors from '../../constants/Colors';
 const ProductsOverviewScreen = props => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-
   // takes a function which automatically receives the state and returns `state.products.availableProducts`
   // from combineReducer in App.js, and gets `availableProducts` from the reducer/product.js
   const products = useSelector(state => state.products.availableProducts);

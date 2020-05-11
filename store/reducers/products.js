@@ -13,7 +13,6 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  //add action to listen
   switch (action.type) {
     case SET_PRODUCTS:
       return {
@@ -22,13 +21,12 @@ export default (state = initialState, action) => {
       };
     case CREATE_PRODUCT:
       const newProduct = new Product(
-        // new Date().toString(),
         action.productData.id,
         'u1',
         action.productData.title,
         action.productData.imageUrl,
         action.productData.description,
-        action.productData.price.filter(prod => prod.ownerId === 'u1')
+        action.productData.price
       );
       return {
         ...state,
@@ -61,7 +59,6 @@ export default (state = initialState, action) => {
       };
     case DELETE_PRODUCT:
       return {
-        // copy the existing state
         ...state,
         // filter from userProducts and return a new array that is created by running a function
         // on every item in the old array, and if that function returns true, we keep that item,

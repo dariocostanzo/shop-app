@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
 import CartItem from '../../components/shop/CartItem';
+import Card from '../../components/UI/Card';
 import * as cartActions from '../../store/actions/cart';
 import * as ordersActions from '../../store/actions/order';
 
@@ -34,7 +34,6 @@ const CartScreen = props => {
       a.productId > b.productId ? 1 : -1
     );
   });
-
   const dispatch = useDispatch();
 
   const sendOrderHandler = async () => {
@@ -44,16 +43,16 @@ const CartScreen = props => {
   };
 
   return (
-    <Card style={styles.screen}>
-      <View style={styles.summary}>
+    <View style={styles.screen}>
+      <Card style={styles.summary}>
         <Text style={styles.summaryText}>
-          Total:
+          Total:{' '}
           <Text style={styles.amount}>
-            ${Math.round((cartTotalAmount.toFixed(2) * 100) / 100)}
+            ${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}
           </Text>
         </Text>
         {isLoading ? (
-          <ActivityIndicator size='small' color='yellow' />
+          <ActivityIndicator size='small' color={Colors.primary} />
         ) : (
           <Button
             color={Colors.accent}
@@ -62,7 +61,7 @@ const CartScreen = props => {
             onPress={sendOrderHandler}
           />
         )}
-      </View>
+      </Card>
       <FlatList
         data={cartItems}
         keyExtractor={item => item.productId}
@@ -78,7 +77,7 @@ const CartScreen = props => {
           />
         )}
       />
-    </Card>
+    </View>
   );
 };
 

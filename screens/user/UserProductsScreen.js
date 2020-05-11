@@ -32,13 +32,15 @@ const UserProductsScreen = props => {
   return (
     <FlatList
       data={userProducts}
-      key={item => item.id}
+      keyExtractor={item => item.id}
       renderItem={itemData => (
         <ProductItem
           image={itemData.item.imageUrl}
           title={itemData.item.title}
           price={itemData.item.price}
-          onSelect={() => {}}
+          onSelect={() => {
+            editProductHandler(itemData.item.id);
+          }}
         >
           <Button
             color={Colors.primary}
@@ -50,7 +52,6 @@ const UserProductsScreen = props => {
           <Button
             color={Colors.primary}
             title='Delete'
-            // onPress={() => deleteHandler(itemData.item.id)}
             onPress={deleteHandler.bind(this, itemData.item.id)}
           />
         </ProductItem>
