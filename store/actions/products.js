@@ -43,12 +43,16 @@ export const fetchProducts = () => {
 export const deleteProduct = productId => {
   // takes the `productId` and returns an action object
   return async dispatch => {
-    await fetch(
+    const response = await fetch(
       `https://rn-shop-app-9c5fd.firebaseio.com/${productId}products.json`,
       {
         method: 'DELETE'
       }
     );
+
+    if (!response.ok) {
+      throw new Error('Something went wrong!');
+    }
 
     dispatch({ type: DELETE_PRODUCT, pid: productId });
   };
@@ -90,17 +94,24 @@ export const createProduct = (title, description, imageUrl, price) => {
 
 export const updateProduct = (id, title, description, imageUrl) => {
   return async dispatch => {
-    await fetch(`https://rn-shop-app-9c5fd.firebaseio.com/${id}.json`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        title,
-        description,
-        imageUrl
-      })
-    });
+    const response = await fetch(
+      `https://rn-shop-app-9c5fd.firebaseio.com/${id}.json`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          imageUrl
+        })
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('Something went wrong!');
+    }
 
     dispatch({
       type: UPDATE_PRODUCT,
