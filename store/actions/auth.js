@@ -1,0 +1,29 @@
+export const SIGNUP = 'SIGNUP';
+
+export const signup = (email, password) => {
+  return async dispatch => {
+    const response = await fetch(
+      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCmXqcJVGuLzS6NPu7Zke-Rx5b6dj924_Y',
+
+      // request to create a new user
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          returnSecureToken: true
+        })
+      }
+    );
+    if (!response.ok) {
+      throw new Error('Something went wrong!');
+    }
+
+    const resData = await response.json();
+    console.log(resData);
+    dispatch({ type: SIGNUP });
+  };
+};
