@@ -1,5 +1,5 @@
 import { ADD_TO_CART, REMOVE_FROM_CART } from '../actions/cart';
-// import { ADD_ORDER } from '../actions/orders';
+// import { ADD_ORDER } from '../actions/order';
 import CartItem from '../../models/cart-item';
 import { DELETE_PRODUCT } from '../actions/products';
 
